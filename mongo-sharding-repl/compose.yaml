@@ -21,6 +21,8 @@ services:
       test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
+    networks:
+      app-network:
 
   mongos_router:
     image: dh-mirror.gitverse.ru/mongo:latest
@@ -37,6 +39,8 @@ services:
         "--port",
         "27018"
       ]
+    networks:
+      app-network:
 
   shard1-1:
     image: dh-mirror.gitverse.ru/mongo:latest
@@ -59,6 +63,8 @@ services:
       test: [ "CMD", "mongosh", "--port", "27019", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
+    networks:
+      app-network:
 
   shard1-2:
     image: dh-mirror.gitverse.ru/mongo:latest
@@ -81,6 +87,8 @@ services:
       test: [ "CMD", "mongosh", "--port", "27021", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
+    networks:
+      app-network:
 
   shard1-3:
     image: dh-mirror.gitverse.ru/mongo:latest
@@ -103,6 +111,8 @@ services:
       test: [ "CMD", "mongosh", "--port", "27022", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
+    networks:
+      app-network:
 
   shard2-1:
     image: dh-mirror.gitverse.ru/mongo:latest
@@ -125,6 +135,8 @@ services:
       test: [ "CMD", "mongosh", "--port", "27020", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
+    networks:
+      app-network:
 
   shard2-2:
     image: dh-mirror.gitverse.ru/mongo:latest
@@ -147,6 +159,8 @@ services:
       test: [ "CMD", "mongosh", "--port", "27023", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
+    networks:
+      app-network:
 
   shard2-3:
     image: dh-mirror.gitverse.ru/mongo:latest
@@ -169,6 +183,8 @@ services:
       test: [ "CMD", "mongosh", "--port", "27024", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
+    networks:
+      app-network:
 
   pymongo_api:
     container_name: pymongo_api
@@ -183,6 +199,8 @@ services:
     environment:
       MONGODB_URL: "mongodb://mongos_router:27018"
       MONGODB_DATABASE_NAME: "somedb"
+    networks:
+      app-network:
 
 volumes:
   config-data:
@@ -193,3 +211,6 @@ volumes:
   shard2-2-data:
   shard2-3-data:
 
+networks:
+  app-network:
+    driver: bridge

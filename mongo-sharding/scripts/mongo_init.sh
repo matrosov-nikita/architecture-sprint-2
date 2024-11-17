@@ -79,12 +79,12 @@ EOF
 
 docker compose exec -T shard1-1 mongosh --port 27019 --quiet <<EOF
 use somedb;
-db.helloDoc.countDocuments();
+print("[shard1] Документы в коллекции helloDoc: " + db.helloDoc.countDocuments());
 exit();
 EOF
 
 docker compose exec -T shard2-1 mongosh --port 27020 --quiet <<EOF
 use somedb;
-db.helloDoc.countDocuments();
+print("[shard2] Документы в коллекции helloDoc: " + db.helloDoc.countDocuments());
 exit();
 EOF
