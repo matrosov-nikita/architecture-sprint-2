@@ -10,7 +10,7 @@ docker compose up -d
 Заполняем mongodb данными
 
 ```shell
-./scripts/mongo-init.sh
+./scripts/mongo_init.sh
 ```
 
 ## Как проверить
@@ -19,11 +19,18 @@ docker compose up -d
 
 Откройте в браузере http://localhost:8080.
 
-Дожно быть поле с шардами вот так выглядеть (3 реплики в каждом шарде):
+Поле с шардами должно выглядеть вот так(3 реплики в каждом шарде):
 
 ```json
-"shards": {
+{
+  "shards": {
     "shard1": "shard1/shard1-1:27019,shard1-2:27021,shard1-3:27022",
     "shard2": "shard2/shard2-1:27020,shard2-2:27023,shard2-3:27024"
+  }
 }
+```
+
+### Как остановить
+```shell
+docker compose down --volumes
 ```
